@@ -171,6 +171,6 @@ Future Work
 
 ⸻
 
-✔️ Conclusion
+Conclusion
 
 This project provides a structured statistical approach to understanding whether defenders receive more cards than other football players. Through EDA and hypothesis testing, we evaluate disciplinary trends and determine whether player position plays a significant role in card accumulation.
