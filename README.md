@@ -6,11 +6,11 @@ Do Defenders Receive More Disciplinary Cards Than Other Football Players?
 
 Introduction
 
-This project investigates whether defenders receive more disciplinary cards (yellow and red) compared to players in other positions in professional football leagues. By creating a numerical “Card Score” metric and analyzing position groups, the study assesses whether disciplinary tendencies differ structurally across roles on the field.
+This project investigates whether defenders receive more disciplinary cards (yellow and red) compared to players in other positions in professional football leagues. By creating a numerical Card Score metric and analyzing position groups, the study assesses whether disciplinary tendencies differ structurally across roles on the field.
 
 The aim is to determine whether the defensive role—often involving physical challenges, last-ditch tackles, and high-pressure defensive actions—results in defenders accumulating more cards over a season compared to midfielders, attackers, and goalkeepers.
 
-By applying exploratory data analysis (EDA) and statistical hypothesis testing, the project provides an evidence-based conclusion on whether defenders are statistically more prone to disciplinary actions.
+By applying exploratory data analysis (EDA), statistical hypothesis testing, and machine learning methods, the project provides an evidence-based evaluation of whether defenders are more prone to disciplinary actions.
 
 ⸻
 
@@ -22,15 +22,15 @@ Football is a physically demanding sport where disciplinary outcomes significant
 	•	Defending critical zones
 	•	Committing tactical fouls
 
-These game dynamics raise the question:
+These game dynamics raise the central research question:
 
 Do defenders inherently receive more cards than other player roles?
 
 This project aims to:
 	•	Compare the average card score of defenders vs. other players
 	•	Quantify disciplinary differences between positions
-	•	Understand whether defensive responsibilities statistically increase card risk
-	•	Provide actionable insights into the relationship between player role and discipline
+	•	Test whether defensive responsibilities statistically increase card risk
+	•	Validate findings using both statistical inference and predictive modeling
 
 ⸻
 
@@ -42,13 +42,13 @@ The dataset used in this project is a CSV file containing official player statis
 	•	Yellow cards
 	•	Red cards
 
-The data was imported into a Google Colab notebook and processed using Python for further analysis.
+The data was imported into a Google Colab notebook and processed using Python.
 
 A custom metric—Card Score—was constructed to quantify disciplinary impact:
 	•	2 points per yellow card
 	•	3 points per red card
 
-This allows a unified comparison across players and positions.
+This unified score allows consistent comparison across players and positions.
 
 ⸻
 
@@ -56,22 +56,20 @@ Hypothesis Testing
 
 Disciplinary Difference Between Defenders and Other Positions
 
-To determine whether defenders receive more cards, we formally test:
+To determine whether defenders receive more cards, the following hypotheses are tested:
 
 H₀ (Null Hypothesis):
-
 Defenders and non-defenders have equal average card scores.
 
 H₁ (Alternative Hypothesis):
-
 Defenders have a significantly higher average card score than other players.
 
 Method:
-A Welch’s Two-Sample t-test (independent samples with unequal variances) is applied to compare the card score distributions of defenders and other positions.
+A Welch’s Two-Sample t-test (independent samples with unequal variances) is applied to compare card score distributions.
 
-Interpretation Rule:
-If p-value < 0.05, reject H₀ → defenders receive significantly more cards.
-If p-value ≥ 0.05, fail to reject H₀ → no statistical difference.
+Decision Rule:
+	•	If p-value < 0.05 → Reject H₀
+	•	If p-value ≥ 0.05 → Fail to reject H₀
 
 ⸻
 
@@ -88,89 +86,120 @@ Tools & Technologies
 
 Data Processing
 
-1. Data Collection
-	•	Import CSV file into Google Colab
-	•	Select relevant columns (Name, Position, Yellow cards, Red cards)
+Data Collection
+	•	Imported CSV file into Google Colab
+	•	Selected relevant columns (Name, Position, Yellow cards, Red cards)
 
-2. Cleaning
+Cleaning
 	•	Verified column integrity
 	•	Checked for missing values
 	•	Standardized positions into two groups:
 	•	Defender
 	•	Other
 
-3. Feature Creation
+Feature Creation
 	•	Constructed Card Score = 2 × Yellow + 3 × Red
 	•	Labeled each player as Defender or Other
 
-4. Grouping
-	•	Aggregated summary statistics for each group
-	•	Prepared datasets for t-test and visualization
+Grouping
+	•	Aggregated summary statistics by position group
+	•	Prepared datasets for hypothesis testing, visualization, and ML modeling
 
 ⸻
 
 Data Analysis & Visualizations
 
 The following EDA techniques were applied:
+	•	Histogram — distribution of card scores for Defenders vs Others
+	•	Box Plot — comparison of median and spread
+	•	Violin Plot — density and distribution shape
+	•	Correlation Heatmap — relationship between yellow cards, red cards, and card score
+	•	Group Summary Statistics — count, mean, variance by position
 
-1. Histogram
+These visualizations provide intuitive insight into disciplinary differences across roles.
 
-Shows distribution of card scores for Defenders vs Others.
+⸻
 
-2. Box Plot
+Machine Learning Extension
 
-Compares median and spread of card scores across groups.
+In addition to statistical analysis, supervised machine learning methods are implemented to assess whether player position can predict disciplinary risk.
 
-3. Violin Plot
+Problem Formulation
 
-Displays density and distribution shape.
+The task is formulated as a binary classification problem.
 
-4. Correlation Heatmap
+Target Variable
+	•	High Card Risk
+	•	1 → Card Score above a predefined threshold
+	•	0 → Card Score below or equal to the threshold
 
-Shows the relationships between:
+The threshold is selected based on the empirical distribution of Card Score to ensure class balance.
+
+Features
+	•	Position (Defender vs Other)
 	•	Yellow cards
 	•	Red cards
-	•	Card score
 
-5. Group Summary
-
-Analyzed count, means, variance for each position group.
-
-These visualizations help determine whether defenders statistically accumulate more cards.
+The Card Score itself is excluded from the feature set to prevent data leakage.
 
 ⸻
 
-Hypothesis Test Results
+Data Splitting
 
-The Welch t-test compares mean card scores between the two groups.
+The dataset is divided into:
+	•	Training set: 70%
+	•	Validation set: 15%
+	•	Test set: 15%
 
-Output metrics:
-	•	t-statistic
-	•	p-value
-
-Interpretation is based on a 0.05 significance level.
-
-A statistically significant p-value indicates defenders indeed receive more cards on average.
+This structure supports robust model training, tuning, and unbiased evaluation.
 
 ⸻
 
-Limitations & Future Work
+Models Implemented
+	•	Logistic Regression
+	•	Baseline interpretable classifier
+	•	Measures positional effect on disciplinary risk
+	•	Decision Tree Classifier
+	•	Captures non-linear decision boundaries
+	•	Offers transparent rule-based interpretation
+	•	Random Forest Classifier
+	•	Ensemble learning method
+	•	Improves predictive accuracy and stability
 
-Limitations
-	•	Data includes only one league dataset; results may not generalize globally.
-	•	Positional labels are simplified into Defender vs Other.
-	•	Card severity is standard-weighted (2 for yellow, 3 for red), but alternative scoring could be explored.
-	•	The dataset does not include contextual match details such as foul type, minute, or referee behavior.
+⸻
 
-Future Work
-	•	Expand the dataset across multiple leagues (La Liga, Serie A, Bundesliga).
-	•	Analyze card patterns by specific defensive sub-roles (CB, RB, LB).
-	•	Include fouls committed and duels lost for deeper disciplinary modeling.
-	•	Implement predictive modeling (e.g., logistic regression) to estimate card probability.
-	•	Explore referee and match-level effects on card issuance.
+Model Evaluation Metrics
+
+Models are evaluated using:
+	•	Accuracy
+	•	Precision
+	•	Recall
+	•	F1-score
+	•	Confusion Matrix
+
+These metrics provide insight into both overall performance and class-level prediction quality.
+
+⸻
+
+Key Findings from Machine Learning
+	•	Player position contributes meaningfully to predicting high card risk
+	•	Defenders exhibit higher predicted probabilities of exceeding the card score threshold
+	•	Ensemble methods (Random Forest) outperform simpler classifiers
+	•	Logistic regression results align with hypothesis testing outcomes
+
+⸻
+
+Interpretation & Contribution
+
+Machine learning results reinforce the statistical findings by:
+	•	Providing predictive validation of disciplinary trends
+	•	Demonstrating consistency between inferential and predictive approaches
+	•	Strengthening confidence in the conclusion that defensive roles are structurally associated with higher disciplinary exposure
 
 ⸻
 
 Conclusion
 
-This project provides a structured statistical approach to understanding whether defenders receive more cards than other football players. Through EDA and hypothesis testing, we evaluate disciplinary trends and determine whether player position plays a significant role in card accumulation.
+This project provides a comprehensive analytical framework to evaluate whether defenders receive more disciplinary cards than other football players. By combining exploratory data analysis, hypothesis testing, and machine learning, the study demonstrates that player position—particularly defensive roles—plays a significant role in disciplinary outcomes.
+
+The integration of predictive modeling enhances the robustness of the findings and shows that disciplinary behavior in football can be both statistically analyzed and algorithmically modeled.
